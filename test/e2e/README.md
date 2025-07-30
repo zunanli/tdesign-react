@@ -20,31 +20,39 @@ test/e2e/
 
 ## 运行测试
 
-### 1. 启动开发服务器
+### 1. 直接运行 E2E 测试（推荐）
 
 ```bash
-# 启动 TDesign 开发服务器
-npm run dev
-```
-
-### 2. 运行 E2E 测试
-
-```bash
-# 运行所有 E2E 测试
-npm run cypress:e2e
+# 运行所有 E2E 测试（自动启动开发服务器）
+npm run test:e2e
 
 # 运行特定测试文件
-npm run cypress:e2e -- --spec "test/e2e/button.spec.js"
+npm run test:e2e -- --spec "test/e2e/button.spec.js"
 
-# 打开 Cypress GUI
-npm run cypress:open
+# 打开 Cypress GUI（自动启动开发服务器）
+npm run test:e2e:open
+
+# 无头模式运行测试
+npm run test:e2e:headless
+```
+
+### 2. 手动启动开发服务器（可选）
+
+如果您想手动控制开发服务器：
+
+```bash
+# 启动开发服务器
+npm run dev
+
+# 在另一个终端运行测试
+npm run test:e2e
 ```
 
 ### 3. 在 CI/CD 中运行
 
 ```bash
 # 无头模式运行测试
-npm run cypress:run
+npm run test:e2e:headless
 ```
 
 ## 测试覆盖范围
