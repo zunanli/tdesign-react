@@ -1,105 +1,163 @@
-<p align="center">
-  <a href="https://tdesign.tencent.com/" target="_blank">
-    <img alt="TDesign Logo" width="200" src="https://tdesign.gtimg.com/site/TDesign.png" />
-  </a>
-</p>
+# Data Classification — 5 PR Split Plan
 
-<p align="center">
-   <a href="https://www.npmjs.com/package/tdesign-react">
-    <img src="https://img.shields.io/npm/l/tdesign-react.svg?sanitize=true" alt="License" />
-  </a>
-  <a href="https://app.codecov.io/gh/Tencent/tdesign-react">
-    <img src="https://img.shields.io/codecov/c/github/Tencent/tdesign-react/develop.svg?style=flat-square" alt="codecov">
-  </a>
-  <a href="https://www.npmjs.com/package/tdesign-react">
-    <img src="https://img.shields.io/npm/v/tdesign-react.svg?sanitize=true" alt="Version">
-  </a>
-  <a href="https://www.npmjs.com/package/tdesign-react">
-    <img src="https://img.shields.io/npm/dm/tdesign-react.svg?sanitize=true" alt="Downloads" />
-  </a>
-  <a href="https://deepwiki.com/Tencent/tdesign-react">
-    <img src="https://deepwiki.com/badge.svg" alt="Ask DeepWiki">
-  </a>
-</p>
+Source: [PR #8726](https://github.com/upwindsecurity/frontend-monorepo/pull/8726) (74 files)
 
-English | [简体中文](./README-zh_CN.md)
+**Totals:** Foundation 24 + standalone deletion 1 + PR2 9 + PR3 10 + PR4 21 + PR5 9 = 74
 
-TDesign React is a UI component library for React 16.x and desktop application.
+**Legend:** `M` modified · `A` added · `D` deleted
 
-# 🎉 Features
+**Dependency graph:** `PR2, PR3, PR4, PR5 → PR1`. The four feature PRs share no files and no symbol-level dependencies with each other, so they can merge in any order once Foundation lands.
 
-- Desktop application interaction
-- High quality UI components for React
-- Consistent API and UI with TDesign component libraries for other frameworks
-- Dark mode and customizable theme
-- Support tree-shaking
+---
 
-# 📦 Installation
+## PR 1 · Foundation (24)
 
-```shell
-npm i tdesign-react
-```
+> Shared types, API surface, shared UI components and hooks.
+> With feature flag `console-data-classifications` off, Foundation has zero behavioral impact on `main`.
 
-```shell
-yarn add tdesign-react
-```
+### DataModel (5)
+- M `packages/console/src/DataModel/AiChat/AiSummaryPromptTypes.ts`
+- M `packages/console/src/DataModel/DataClassificationTypes/ClassificationScopeFilterTypes.ts`
+- M `packages/console/src/DataModel/DataClassificationTypes/ClassificationTypes.ts`
+- M `packages/console/src/DataModel/Filters/Views/ViewsTypes.ts`
+- M `packages/console/src/DataModel/Objects/DataClassification/Classification.ts`
 
-```shell
-pnpm add tdesign-react
-```
+### ServerAPI (2)
+- M `packages/console/src/ServerAPI/Requests/DataClassification/DataClassification.ts`
+- M `packages/console/src/ServerAPI/Requests/DataClassification/dataClassificationTypes.ts`
 
-# 🔨 Usage
+### Shared Components / Hooks (6)
+- M `packages/console/src/components/ConsoleFilterBar/FilterIconsConfiguration.tsx`
+- A `packages/console/src/components/DataClassifications/ClassificationCapabilitiesInteractive/ClassificationCapabilitiesInteractive.tsx`
+- A `packages/console/src/components/DataClassifications/ClassificationCapabilitiesInteractive/ClassificationCapabilitiesCell.tsx`
+- A `packages/console/src/components/GeneralSidePane/SidePanes/DataPage/DataClassifications/ClassificationDetailsSidePane/DisableItemModal.tsx`
+- M `packages/console/src/components/GeneralSidePane/SidePanes/DataPage/DataClassifications/CreateDataClassificationSidePane/ClassificationPatternsSection/PatternEntryRow.tsx`
+- A `packages/console/src/components/GeneralSidePane/SidePanes/DataPage/DataClassifications/CreateDataClassificationSidePane/hooks/useAiRegexGenerator.ts`
 
-```tsx
-import React from 'react';
-import { Button } from 'tdesign-react';
-import 'tdesign-react/es/style/index.css';
+### ReporterSource Shared (2)
+- A `packages/console/src/components/ReporterSource/ReporterSourceBadgeIcon.tsx`
+- M `packages/console/src/components/Tables/VulnerabilitiesTables/NestedTables/asyncCellComponents/SourceCell/SourceCell.tsx`
 
-function App() {
-  return <Button>Hello TDesign</Button>;
-}
+### Scope / Capabilities Shared (6)
+- M `packages/console/src/pages/DataPage/components/DataClassificationsTab/components/DataClassificationScopeSelection/DataClassificationScopeViewSection.tsx`
+- M `packages/console/src/pages/DataPage/components/DataClassificationsTab/components/DataClassificationScopeSelection/ScopeViewConditionRow.tsx`
+- A `packages/console/src/pages/DataPage/components/DataClassificationsTab/components/DataClassificationScopeSelection/hooks/useFileTypeOptions.tsx`
+- M `packages/console/src/pages/DataPage/components/DataClassificationsTab/components/DataClassificationScopeSelection/hooks/useFilterValueOptions.ts`
+- M `packages/console/src/pages/DataPage/components/DataClassificationsTab/components/DataClassificationScopeSelection/scopeSelectionUtils.ts`
+- M `packages/console/src/pages/DataPage/components/DataClassificationsTab/components/SelectClassificationCapabilities/SelectClassificationCapabilities.tsx`
 
-ReactDOM.createRoot(document.getElementById('app')).render(<App />);
-```
+### shared-library (3)
+- M `packages/shared-library/src/DataModelCore/Filters/filterTypesDictionary.ts`
+- M `packages/shared-library/src/components/InputSearchAi/InputSearchAi.tsx`
+- M `packages/shared-library/src/components/TableCells/DefaultBadgeCodeCell/DefaultBadgeCodeCell.tsx`
 
-The package of tdesign-react provides kinds of bundles, read [the documentation](https://github.com/Tencent/tdesign/blob/main/docs/develop-install.md) for the detail of differences between bundles.
+---
 
-# Quick Start
+## Standalone commit (1)
 
-Visit [TDesign Starter](https://tdesign.tencent.com/starter/react/) to experience in the application built with TDesign React UI components.
+- D `packages/console/src/ServerAPI/Requests/DataClassification/DataClassificationApiStructure.md`
 
-# Browser Support
+---
 
-| [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt="IE / Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)<br/> IE / Edge | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)<br/>Firefox | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)<br/>Chrome | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)<br/>Safari |
-| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Edge >=84                                                                                                                                                                                                        | Firefox >=83                                                                                                                                                                                                      | Chrome >=84                                                                                                                                                                                                   | Safari >=14.1                                                                                                                                                                                                 |
+## PR 2 · Main Table (9)
 
-Read our [browser compatibility](https://github.com/Tencent/tdesign/wiki/Browser-Compatibility) for more details.
+> Data page entry point, main classifications table, column definitions and tab shell.
 
-# TDesign component libraries
+- M `packages/console/src/DataModel/DataPageModel/ClassificationsFilterConfig.ts`
+- M `packages/console/src/components/UpwindPageLayout/UpwindPageLayout.tsx`
+- M `packages/console/src/pages/DataPage/DataPage.tsx`
+- M `packages/console/src/pages/DataPage/components/DataClassificationsTab/DataClassificationsTab.tsx`
+- M `packages/console/src/pages/DataPage/components/DataClassificationsTab/ClassificationsTable/ClassificationsTableColumnDefs.ts`
+- M `packages/console/src/pages/DataPage/components/DataClassificationsTab/ClassificationsTable/components/ClassificationCategoryCell.tsx`
+- D `packages/console/src/pages/DataPage/components/DataClassificationsTab/ClassificationsTable/components/ClassificationCapabilitiesCell.tsx`
+- M `packages/console/src/pages/DataPage/components/DataPageHeader/DataPageHeader.tsx`
+- M `packages/console/src/pages/IdentitiesPage/IdentitiesTabs/MachinesTab/MachineInnerTabs/ExposedSecretsGeneralPage/ExposedSecrets.tsx`
 
-TDesign also provides component libraries for other platforms and frameworks.
+---
 
-- component library for Vue 3.x : [tdesign-vue-next](https://github.com/Tencent/tdesign-vue-next)
-- component library for Vue 2.x : [tdesign-vue](https://github.com/Tencent/tdesign-vue)
-- component library for Wechat miniprogram : [tdesign-miniprogram](https://github.com/Tencent/tdesign-miniprogram)
+## PR 3 · Create Sidepane (10)
 
-# Contributing
+> Create-classification side pane and pattern testing.
 
-Contributing is welcome. Read [guidelines for contributing](https://github.com/Tencent/tdesign-react/blob/develop/CONTRIBUTING.md) before submitting your [Pull Request](https://github.com/Tencent/tdesign-react/pulls).
+- M `packages/console/src/components/GeneralSidePane/SidePanes/DataPage/DataClassifications/CreateDataClassificationSidePane/ClassificationPatternsSection/CapabilitiesOverrideSection.tsx`
+- M `packages/console/src/components/GeneralSidePane/SidePanes/DataPage/DataClassifications/CreateDataClassificationSidePane/ClassificationPatternsSection/ClassificationPatternsSection.tsx`
+- M `packages/console/src/components/GeneralSidePane/SidePanes/DataPage/DataClassifications/CreateDataClassificationSidePane/ClassificationPatternsSection/ExistingClassificationBadges.tsx`
+- M `packages/console/src/components/GeneralSidePane/SidePanes/DataPage/DataClassifications/CreateDataClassificationSidePane/CreateClassificationBanner/CreateClassificationBanner.tsx`
+- A `packages/console/src/components/GeneralSidePane/SidePanes/DataPage/DataClassifications/CreateDataClassificationSidePane/CreateClassificationBanner/createDataClassification-dark.png`
+- M `packages/console/src/components/GeneralSidePane/SidePanes/DataPage/DataClassifications/CreateDataClassificationSidePane/CreateDataClassificationSidePane.tsx`
+- M `packages/console/src/components/GeneralSidePane/SidePanes/DataPage/DataClassifications/CreateDataClassificationSidePane/SelectClassificationCapabilitiesSection/SelectClassificationCapabilitiesSection.tsx`
+- M `packages/console/src/components/GeneralSidePane/SidePanes/DataPage/DataClassifications/CreateDataClassificationSidePane/SelectClassificationCategory/SelectClassificationCategory.tsx`
+- M `packages/console/src/pages/DataPage/components/DataClassificationsTab/components/TestPatternSection/TestPatternSection.tsx`
+- M `packages/console/src/pages/DataPage/components/DataClassificationsTab/components/TestPatternSection/test-pattern-section.scss`
 
-## Contributors
+---
 
-<a href="https://openomy.app/github/tencent/tdesign-react" target="_blank" style="display: block; width: 100%;" align="center">
-  <img src="https://openomy.app/svg?repo=tencent/tdesign-react&chart=bubble&latestMonth=12" target="_blank" alt="Contribution Leaderboard" style="display: block; width: 100%;" />
- </a>
+## PR 4 · Detail Sidepane (21)
 
-# Feedback
+> Classification detail side pane, Patterns tab, Findings section.
 
-Create your [Github issues](https://github.com/Tencent/tdesign-react/issues) or scan the QR code below to join our user groups
+### Filter configs (3)
+- A `packages/console/src/DataModel/DataPageModel/ClassificationFindingsFilterConfig.ts`
+- A `packages/console/src/DataModel/DataPageModel/ClassificationFindingsFilterIconConfig.tsx`
+- A `packages/console/src/DataModel/DataPageModel/ClassificationPatternsFilterConfig.ts`
 
-<img src="https://raw.githubusercontent.com/Tencent/tdesign/main/packages/components/src/images/groups/react-group.png" width="200" />
+### Sidepane shell (4)
+- M `packages/console/src/components/GeneralSidePane/SidePanes/DataPage/DataClassifications/ClassificationDetailsSidePane/ClassificationDetailsOverviewTab.tsx`
+- M `packages/console/src/components/GeneralSidePane/SidePanes/DataPage/DataClassifications/ClassificationDetailsSidePane/ClassificationDetailsSettingsTab.tsx`
+- M `packages/console/src/components/GeneralSidePane/SidePanes/DataPage/DataClassifications/ClassificationDetailsSidePane/ClassificationDetailsSidePane.tsx`
+- D `packages/console/src/components/GeneralSidePane/SidePanes/DataPage/DataClassifications/ClassificationDetailsSidePane/DisableClassificationModal.tsx`
 
-# License
+### Patterns tab (7)
+- A `packages/console/src/components/GeneralSidePane/SidePanes/DataPage/DataClassifications/ClassificationDetailsSidePane/ClassificationDetailsPatternsTab/ClassificationDetailsPatternsTab.tsx`
+- A `packages/console/src/components/GeneralSidePane/SidePanes/DataPage/DataClassifications/ClassificationDetailsSidePane/ClassificationDetailsPatternsTab/ClassificationPatternsTable/ClassificationPatternsTable.tsx`
+- A `packages/console/src/components/GeneralSidePane/SidePanes/DataPage/DataClassifications/ClassificationDetailsSidePane/ClassificationDetailsPatternsTab/ClassificationPatternsTable/ClassificationPatternsTableColumnDefs.ts`
+- A `packages/console/src/components/GeneralSidePane/SidePanes/DataPage/DataClassifications/ClassificationDetailsSidePane/ClassificationDetailsPatternsTab/ClassificationPatternsTable/PatternActionsCell.tsx`
+- A `packages/console/src/components/GeneralSidePane/SidePanes/DataPage/DataClassifications/ClassificationDetailsSidePane/ClassificationDetailsPatternsTab/EditPatternModal/AddPatternModal.tsx`
+- A `packages/console/src/components/GeneralSidePane/SidePanes/DataPage/DataClassifications/ClassificationDetailsSidePane/ClassificationDetailsPatternsTab/EditPatternModal/DeletePatternModal.tsx`
+- A `packages/console/src/components/GeneralSidePane/SidePanes/DataPage/DataClassifications/ClassificationDetailsSidePane/ClassificationDetailsPatternsTab/EditPatternModal/EditPatternModal.tsx`
 
-The MIT License. Please see [the license file](./LICENSE) for more information.
+### Findings section (7)
+- A `packages/console/src/components/GeneralSidePane/SidePanes/DataPage/DataClassifications/ClassificationDetailsSidePane/ClassificationFindingsSection/ClassificationFindingsSection.tsx`
+- A `packages/console/src/components/GeneralSidePane/SidePanes/DataPage/DataClassifications/ClassificationDetailsSidePane/ClassificationFindingsSection/ClassificationFindingsTable/ClassificationFindingsTable.tsx`
+- A `packages/console/src/components/GeneralSidePane/SidePanes/DataPage/DataClassifications/ClassificationDetailsSidePane/ClassificationFindingsSection/ClassificationFindingsTable/ClassificationFindingsTableColumnDefs.ts`
+- A `packages/console/src/components/GeneralSidePane/SidePanes/DataPage/DataClassifications/ClassificationDetailsSidePane/ClassificationFindingsSection/ClassificationFindingsTable/cells/ClassificationFindingDataStateCell.tsx`
+- A `packages/console/src/components/GeneralSidePane/SidePanes/DataPage/DataClassifications/ClassificationDetailsSidePane/ClassificationFindingsSection/ClassificationFindingsTable/cells/ClassificationFindingLocationCell.tsx`
+- A `packages/console/src/components/GeneralSidePane/SidePanes/DataPage/DataClassifications/ClassificationDetailsSidePane/ClassificationFindingsSection/ClassificationFindingsTable/cells/ClassificationFindingSecurityIssuesCell.tsx`
+- A `packages/console/src/components/GeneralSidePane/SidePanes/DataPage/DataClassifications/ClassificationDetailsSidePane/ClassificationFindingsSection/ClassificationFindingsTable/cells/ClassificationFindingSourceCell.tsx`
+
+---
+
+## PR 5 · Global Exclusion (9)
+
+> Global exclusion side pane. Contains breaking type changes in `globalExclusionTypes.ts`; all producers and consumers ship together in this PR.
+
+- M `packages/console/src/DataModel/DataPageModel/GlobalExclusionsFilterConfig.ts`
+- M `packages/console/src/ServerAPI/Requests/DataClassification/GlobalExclusion.ts`
+- M `packages/console/src/ServerAPI/Requests/DataClassification/globalExclusionTypes.ts`
+- M `packages/console/src/components/GeneralSidePane/SidePanes/DataPage/DataClassifications/GlobalExclusionsSidePane/GlobalExclusionsSidePane.tsx`
+- M `packages/console/src/components/GeneralSidePane/SidePanes/DataPage/DataClassifications/GlobalExclusionsSidePane/GlobalExclusionModal/GlobalExclusionModal.tsx`
+- M `packages/console/src/components/GeneralSidePane/SidePanes/DataPage/DataClassifications/GlobalExclusionsSidePane/GlobalExclusionsTable/GlobalExclusionActionsCell.tsx`
+- M `packages/console/src/components/GeneralSidePane/SidePanes/DataPage/DataClassifications/GlobalExclusionsSidePane/GlobalExclusionsTable/GlobalExclusionsTable.tsx`
+- M `packages/console/src/components/GeneralSidePane/SidePanes/DataPage/DataClassifications/GlobalExclusionsSidePane/GlobalExclusionsTable/GlobalExclusionsTableColumnDefs.ts`
+- D `packages/console/src/components/GeneralSidePane/SidePanes/DataPage/DataClassifications/GlobalExclusionsSidePane/GlobalExclusionsTable/GlobalExclusionCapabilitiesCell.tsx`
+
+---
+
+## File overlap check
+
+| PR | Unique paths | Overlap with PR1 |
+| --- | --- | --- |
+| PR1 Foundation | 24 + 1 deletion | — |
+| PR2 Main Table | 9 | 0 |
+| PR3 Create Sidepane | 10 | 0 |
+| PR4 Detail Sidepane | 21 | 0 |
+| PR5 Global Exclusion | 9 | 0 |
+
+### Same-name, different-path items (not conflicts)
+
+| Case | PR1 path | PR2/4/5 path | Note |
+| --- | --- | --- | --- |
+| Unified capabilities cell | A `components/DataClassifications/ClassificationCapabilitiesInteractive/ClassificationCapabilitiesCell.tsx` | D `pages/DataPage/.../ClassificationsTable/components/ClassificationCapabilitiesCell.tsx` (PR2)<br>D `.../GlobalExclusionsTable/GlobalExclusionCapabilitiesCell.tsx` (PR5) | Same filename but different path. Old file deletions ship with their respective consumer PR. |
+| Disable modal generalization | A `.../ClassificationDetailsSidePane/DisableItemModal.tsx` | D `.../ClassificationDetailsSidePane/DisableClassificationModal.tsx` (PR4) | Same directory, different filenames — git treats them as independent files. |
+
+> File independence is not the same as symbol independence. PR2/3/4/5 all import types, components, and hooks from Foundation. Merging them before Foundation would cause compile failures. After Foundation lands, the four feature PRs are order-independent.
